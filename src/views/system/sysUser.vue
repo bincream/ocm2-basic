@@ -275,9 +275,6 @@ export default {
     }
   },
   watch: {
-    'listQuery.keywords': function() {
-      this.handleFilter()
-    },
     dialogFormVisible(val) {
       !val && setTimeout(() => {
         this.$refs['sysUserEdit'].resetFields()

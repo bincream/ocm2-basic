@@ -322,9 +322,9 @@
               v-show="ope3Status == 'info3'"
               type="warning"
               style="position:absolute;right:70px"
-              @click="ope3Status = 'update3'"
+              @click="editUpdateData3"
             >编辑</el-button>
-            <el-button v-show="ope3Status == 'update3'" style="position:absolute;right:70px" @click="ope3Status = 'info3'">取消</el-button>
+            <el-button v-show="ope3Status == 'update3'" style="position:absolute;right:70px" @click="cancelUpdateData3">取消</el-button>
             <el-button
               type="primary"
               size="small"
@@ -429,6 +429,7 @@ export default {
     return {
       restEdit: {},
       tableData: [],
+      tableDataOld: [],
       vibrationEdit: {},
       deviceEdit: {},
       warningEdit: {},
@@ -604,11 +605,75 @@ export default {
       this.settingParam = JSON.stringify(this.configurationEdit)
       this.getDeviceParamSetting()
     },
+    editUpdateData3() {
+      this.ope3Status = 'update3'
+      this.tableDataOld = this.tableData
+      console.log('编辑this.tableDataOld', this.tableDataOld)
+    },
+    cancelUpdateData3() {
+      this.ope3Status = 'info3'
+      this.tableData = this.tableDataOld
+      this.vibrationEdit.Cable_AllLossAlarmThr = []
+      this.vibrationEdit.Cable_Length = []
+      this.tableData.forEach((item) => {
+        item.allLossAlarmThr = Math.floor(parseInt(item.allLossAlarmThr))
+        item.length = Math.floor(parseInt(item.length))
+        console.log('allLossAlarmThr', typeof item.allLossAlarmThr)
+        console.log('length', typeof item.length)
+        this.vibrationEdit.Cable_AllLossAlarmThr.push(item.allLossAlarmThr)
+        this.vibrationEdit.Cable_Length.push(item.length)
+      })
+      this.settingParam = JSON.stringify(this.vibrationEdit)
+      deviceParamSetting({ settingParam: this.settingParam }).then(response => {
+        this.deviceParamSetting = response.data
+        this.obj = this.deviceParamSetting
+        this.loading = true
+        if (this.websocket) {
+          this.websocket.close()
+          this.websocket = null
+        }
+        if (window.WebSocket) {
+        // this.websocket = new WebSocket('ws://' + process.env.LINK_API)
+          this.websocket = new WebSocket('ws://192.168.8.131:9005/')
+          // 当有消息过来的时候触发
+          const that = this
+          this.websocket.onmessage = function(event) {
+            that.loading = false
+          }
+
+          // 连接关闭的时候触发
+          this.websocket.onclose = function(event) {
+            console.log('断开连接')
+          }
+
+          // 连接打开的时候触发
+          this.websocket.onopen = function(event) {
+            that.websocket.send(that.obj)
+            that.timer()
+            console.log('建立连接')
+          }
+          this.websocket.onerror = function(event) {
+            console.log('cuwu')
+          }
+          this.websocket.onclose = function(event) {
+            console.log('连接断开')
+          // that.contextAudioStop()
+          }
+        } else {
+          this.$message.error('浏览器不支持WebSocket')
+        }
+      })
+    },
     updateData3() {
+      console.log('确定this.tableDataOld', this.tableDataOld)
       this.ope3Status = 'info3'
       this.vibrationEdit.Cable_AllLossAlarmThr = []
       this.vibrationEdit.Cable_Length = []
       this.tableData.forEach((item) => {
+        item.allLossAlarmThr = Math.floor(parseInt(item.allLossAlarmThr))
+        item.length = Math.floor(parseInt(item.length))
+        console.log('allLossAlarmThr', typeof item.allLossAlarmThr)
+        console.log('length', typeof item.length)
         this.vibrationEdit.Cable_AllLossAlarmThr.push(item.allLossAlarmThr)
         this.vibrationEdit.Cable_Length.push(item.length)
       })
@@ -736,6 +801,7 @@ export default {
           // data: ['恒定预警']
         },
         toolbox: {
+          right: 60,
           feature: {
             dataZoom: {
               yAxisIndex: 'none'

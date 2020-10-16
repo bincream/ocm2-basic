@@ -154,6 +154,7 @@ export default {
           data: ['报警合计']
         },
         toolbox: {
+          right: 60,
           show: true,
           feature: {
             dataView: { show: true, readOnly: false,

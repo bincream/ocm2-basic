@@ -730,9 +730,6 @@ export default {
     }
   },
   watch: {
-    'listQuery.keywords': function() {
-      this.handleFilter()
-    },
     dialogDetVisible(val) {
       !val && setTimeout(() => {
         this.modelInfo = {}

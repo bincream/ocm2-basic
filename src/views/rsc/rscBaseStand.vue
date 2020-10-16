@@ -23,19 +23,18 @@
       @row-click="handleDetail"
     >
       <el-table-column label="基站名称" prop="standName" />
-      <el-table-column label="光纤长度" prop="standNo" />
+      <el-table-column label="基站编号" prop="standNo" />
       <el-table-column label="基站通道" prop="standChannel" />
-      <!-- <el-table-column label="光纤长度略略略" prop="fiberLength" /> -->
-      <el-table-column label="基站IP" width="120" prop="standIp" />
+      <el-table-column label="基站IP" prop="standIp" />
       <el-table-column label="基站精度" prop="precisions" />
-      <el-table-column label="基站模式" width="150">
+      <el-table-column label="基站模式">
         <template slot-scope="scope">
           {{ scope.row.standMode | standMode }}
         </template>
       </el-table-column>
-      <el-table-column label="音频采样率" width="120" prop="samplingRate" />
+      <el-table-column label="音频采样率" prop="samplingRate" />
       <el-table-column label="报警阈值" prop="alarmThreshold" />
-      <el-table-column label="操作" width="200">
+      <el-table-column label="操作" width="260">
         <template slot-scope="scope">
           <!-- <el-button
             v-if="checkPermission(['baseStand/getPrecisions'])"
@@ -75,7 +74,7 @@
                 </el-form-item>
               </td>
               <td class="width33">
-                <el-form-item label="光纤长度" prop="standNo">
+                <el-form-item label="基站编号" prop="standNo">
                   <el-input v-model="standEdit.standNo" size="small" placeholder="请输入" />
                 </el-form-item>
               </td>
@@ -99,34 +98,34 @@
             </tr>
 
             <tr>
-              <td>
+              <td class="width33">
                 <el-form-item label="颜色取值范围1" prop="tdColor1">
                   <el-input v-model="standEdit.tdColor1" size="small" placeholder="请输入" />
                 </el-form-item>
               </td>
-              <td>
+              <td class="width33">
                 <el-form-item label="颜色取值范围2" prop="tdColor2">
                   <el-input v-model="standEdit.tdColor2" size="small" placeholder="请输入" />
                 </el-form-item>
               </td>
-              <td>
+              <td class="width33">
                 <el-form-item label="颜色取值范围3" prop="tdColor3">
                   <el-input v-model="standEdit.tdColor3" size="small" placeholder="请输入" />
                 </el-form-item>
               </td>
             </tr>
             <tr>
-              <td>
+              <td class="width33">
                 <el-form-item label="颜色取值范围4" prop="tdColor4">
                   <el-input v-model="standEdit.tdColor4" size="small" placeholder="请输入" />
                 </el-form-item>
               </td>
-              <td>
+              <td class="width33">
                 <el-form-item label="颜色取值范围5" prop="tdColor5">
                   <el-input v-model="standEdit.tdColor5" size="small" placeholder="请输入" />
                 </el-form-item>
               </td>
-              <td>
+              <td class="width33">
                 <el-form-item label="颜色取值范围6" prop="tdColor6">
                   <el-input v-model="standEdit.tdColor6" size="small" placeholder="请输入" />
                 </el-form-item>
@@ -154,7 +153,7 @@
             <td class="width21">
               <span>{{ rscInfo.standName }}</span>
             </td>
-            <td class="blackMark">光纤长度：</td>
+            <td class="blackMark">基站编号：</td>
             <td class="width21">
               <span>{{ rscInfo.standNo }}</span>
             </td>
@@ -249,18 +248,6 @@ export default {
     }
   },
   data() {
-    const validatePositiveInteger = (rule, value, callback) => {
-      if (value) {
-        if (!(/(^[1-9]\d*$)/.test(value))) {
-          this.$message({
-            message: '请输入正整数',
-            type: 'error'
-          })
-        } else {
-          callback()
-        }
-      }
-    }
     return {
       list: [],
       total: null,
@@ -282,8 +269,7 @@ export default {
           { required: true, message: '请输入', trigger: 'blur' }
         ],
         standNo: [
-          { required: true, message: '请输入正整数', trigger: 'blur' },
-          { required: true, validator: validatePositiveInteger, trigger: 'blur' }
+          { required: true, message: '请输入', trigger: 'blur' }
         ],
         standChannel: [
           { required: true, message: '请输入', trigger: 'blur' }
@@ -328,25 +314,6 @@ export default {
     this.getList()
   },
   methods: {
-    number(e) {
-      console.log(e)
-
-      const flag = new RegExp('^[1-9]([0-9])*$').test(e)
-
-      console.log(flag)
-
-      if (!flag) {
-        this.$message({
-
-          showClose: true,
-
-          message: '请输入正整数',
-
-          type: 'warning'
-
-        })
-      }
-    },
     checkPermission,
     getList() {
       this.listLoading = true
@@ -404,7 +371,7 @@ export default {
         this.standEdit = response.data
       })
     },
-    // 编辑修改提交
+    // 修改提交
     updateData(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -445,7 +412,7 @@ export default {
       getAllList({ page: 1, limit: this.total }).then(response => {
         const list = response.data.list
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['基站名称', '光纤长度', '基站IP', '基站精度']
+          const tHeader = ['基站名称', '基站编号', '基站IP', '基站精度']
           const filterVal = ['standName', 'standNo', 'standIp', 'precisions']
           const data = this.formatJson(filterVal, list)
           excel.export_json_to_excel({

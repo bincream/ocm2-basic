@@ -126,7 +126,9 @@ export default {
   position: absolute;
   right: 160px;
   z-index: 11;
-  top: 8px;
+  top: 7px;
+  height: 36px;
+  line-height: 10px;
   border-radius: 15px;
 }
 </style>

@@ -96,11 +96,6 @@ export default {
       filename: ''
     }
   },
-  watch: {
-    'listQuery.keywords': function() {
-      this.handleFilter()
-    }
-  },
   created() { },
   mounted() {
     this.getList()

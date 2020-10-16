@@ -217,7 +217,6 @@ export default {
       margin-right: 10px;
 
       .avatar-wrapper {
-        margin-top: 5px;
         position: relative;
         display: flex;
         .user-avatar {

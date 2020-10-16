@@ -11,11 +11,11 @@ export default {
   props: {
     className: {
       type: String,
-      default: 'chartMix'
+      default: 'chart'
     },
     id: {
       type: String,
-      default: 'chartMix'
+      default: 'chart'
     },
     width: {
       type: String,
@@ -28,22 +28,22 @@ export default {
   },
   data() {
     return {
-      chartMix: null
+      chart: null
     }
   },
   mounted() {
     this.initChart()
   },
   beforeDestroy() {
-    if (!this.chartMix) {
+    if (!this.chart) {
       return
     }
-    this.chartMix.dispose()
-    this.chartMix = null
+    this.chart.dispose()
+    this.chart = null
   },
   methods: {
     initChart() {
-      this.chartMix = echarts.init(document.getElementById(this.id))
+      this.chart = echarts.init(document.getElementById(this.id))
       const xData = (function() {
         const data = []
         for (let i = 1; i < 13; i++) {
@@ -51,7 +51,7 @@ export default {
         }
         return data
       }())
-      this.chartMix.setOption({
+      this.chart.setOption({
         backgroundColor: '#344b58',
         title: {
           text: 'statistics',

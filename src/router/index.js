@@ -148,14 +148,6 @@ export const asyncRoutes = [
         meta: {
           title: 'OTDR'
         }
-      },
-      {
-        path: '/twoDimension',
-        component: () => import('@/views/signal/soundWave'),
-        name: 'SoundWave',
-        meta: {
-          title: '声音波形'
-        }
       }
     ]
   },

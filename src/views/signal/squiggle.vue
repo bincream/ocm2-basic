@@ -15,7 +15,8 @@
         <el-button v-if="websocket == null" type="primary" @click="connect">连接</el-button>
         <el-button v-else type="danger" @click="disconnect">断开连接</el-button>
       </div>
-      <div id="myChart" style="width: 100%; height: 80% ;" />
+
+      <div id="myChart" style="width: 100%; height: 80%" />
     </div>
 
   </div>
@@ -159,6 +160,7 @@ export default {
         //   }
         // },
         toolbox: {
+          right: 60,
           feature: {
             dataZoom: {
               yAxisIndex: 'none'
@@ -234,7 +236,7 @@ export default {
 .title {
   height: 40px;
   position: relative;
-  margin:0px 0px 20px 20px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;

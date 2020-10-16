@@ -257,10 +257,8 @@ export default {
         case 2:
           return '光纤始端'
         case 3:
-          return '光纤始端'
-        case 4:
           return '光纤末端'
-        case 5:
+        case 4:
           return '其它事件'
         default:
           break

@@ -11,11 +11,11 @@ export default {
   props: {
     className: {
       type: String,
-      default: 'chartKeyboard'
+      default: 'chart'
     },
     id: {
       type: String,
-      default: 'chartKeyboard'
+      default: 'chart'
     },
     width: {
       type: String,
@@ -28,22 +28,22 @@ export default {
   },
   data() {
     return {
-      chartKeyboard: null
+      chart: null
     }
   },
   mounted() {
     this.initChart()
   },
   beforeDestroy() {
-    if (!this.chartKeyboard) {
+    if (!this.chart) {
       return
     }
-    this.chartKeyboard.dispose()
-    this.chartKeyboard = null
+    this.chart.dispose()
+    this.chart = null
   },
   methods: {
     initChart() {
-      this.chartKeyboard = echarts.init(document.getElementById(this.id))
+      this.chart = echarts.init(document.getElementById(this.id))
 
       const xAxisData = []
       const data = []
@@ -53,7 +53,7 @@ export default {
         data.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5)
         data2.push((Math.sin(i / 5) * (i / 5 + 10) + i / 6) * 3)
       }
-      this.chartKeyboard.setOption({
+      this.chart.setOption({
         backgroundColor: '#08263a',
         grid: {
           left: '5%',

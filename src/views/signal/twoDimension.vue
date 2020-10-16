@@ -15,7 +15,7 @@
         <el-button
           v-if="checkPermission(['twoDimension/realtimeAudioQuery'])"
           v-show="websocket1 !== null"
-          type="primary"
+          type="danger"
           style="position:absolute;right:0px"
           @click="monitorEnd"
         >结束监听</el-button>
@@ -27,7 +27,7 @@
         </audio>
       </div>
       <el-divider />
-      <div class="title" style="margin-top:20px">
+      <div class="title">
         <span>阈值设置下的二维振动</span>
         <span class="radio-label" style="width:160px;position:absolute;right:220px">Y轴范围：</span>
         <el-input v-model="yMax" type="number" placeholder="请输入Y轴最大范围" style="width:160px;position:absolute;right:110px" @input="updataY" />
@@ -55,7 +55,6 @@
 
 <script>
 import { realtimeAudioQuery, vibQuery } from '@/api/signal/twoDimension'
-// 告警颜色和光纤长度
 import { standList, baseStandInfo } from '@/api/public'
 import { debounce } from '@/utils'
 import echarts from 'echarts'
@@ -358,8 +357,11 @@ export default {
       if (!this.monitorEdit.col) {
         this.$message.error('请输入距离')
         return false
+      // } else {
+        // this.monitorEdit.col = Math.floor(this.singleAudio / 20)
       }
       realtimeAudioQuery(this.monitorEdit).then(response => {
+        console.log('response', response)
         this.monitorData = response.data
         this.createWs1()
       })
@@ -378,6 +380,7 @@ export default {
           trigger: 'axis'
         },
         toolbox: {
+          right: 60,
           feature: {
             // dataZoom: {
             //   yAxisIndex: 'none'
@@ -455,7 +458,7 @@ export default {
       var mx = this.Data1[0]
       this.Data1.forEach((item, index) => {
         for (let i = index * 5; i < index * 5 + 4; i++) {
-          if (this.Data1[i] > this.Data1[0]) {
+          if (this.Data1[i] > this.Data1[index * 5]) {
             mx = this.Data1[i]
             key = i
           }
@@ -495,6 +498,7 @@ export default {
           data: []
         },
         toolbox: {
+          right: 60,
           feature: {
             dataZoom: {
               yAxisIndex: 'none'
@@ -682,14 +686,15 @@ export default {
 }
 .title {
   position: relative;
-  margin:0px 0px 20px 20px;
+  margin-left: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   line-height:42px;
-  font-size:22px;
+  font-size:30px;
   font-weight:500;
   color:rgba(0,0,0,1);
+  margin-top: 20px
 }
 
 .radio-label {

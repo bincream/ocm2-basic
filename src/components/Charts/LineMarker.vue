@@ -11,11 +11,11 @@ export default {
   props: {
     className: {
       type: String,
-      default: 'chartLine'
+      default: 'chart'
     },
     id: {
       type: String,
-      default: 'chartLine'
+      default: 'chart'
     },
     width: {
       type: String,
@@ -28,24 +28,24 @@ export default {
   },
   data() {
     return {
-      chartLine: null
+      chart: null
     }
   },
   mounted() {
     this.initChart()
   },
   beforeDestroy() {
-    if (!this.chartLine) {
+    if (!this.chart) {
       return
     }
-    this.chartLine.dispose()
-    this.chartLine = null
+    this.chart.dispose()
+    this.chart = null
   },
   methods: {
     initChart() {
-      this.chartLine = echarts.init(document.getElementById(this.id))
+      this.chart = echarts.init(document.getElementById(this.id))
 
-      this.chartLine.setOption({
+      this.chart.setOption({
         backgroundColor: '#394056',
         title: {
           top: 20,

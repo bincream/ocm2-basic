@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="optical">
-      <span style="background: #a5db8f;" class="text">光纤长度</span>
+      <span class="text">光纤长度</span>
     </div>
     <div class="block">
       <el-tooltip v-for="(item,index) in pointList" :key="index" effect="dark" :content="item.value" placement="top">
@@ -14,8 +14,9 @@
         disabled
       />
     </div>
+    <el-divider />
     <div class="optical">
-      <span style="background: #a5db8f;" class="text">光纤长度</span>
+      <span class="text">实时报警列表</span>
     </div>
     <el-table
       ref="multipleTable"
@@ -245,10 +246,8 @@ export default {
         case 2:
           return '光纤始端'
         case 3:
-          return '光纤始端'
-        case 4:
           return '光纤末端'
-        case 5:
+        case 4:
           return '其它事件'
         default:
           break
@@ -353,6 +352,7 @@ export default {
           this.left = (item.centerCol / 500)
           this.pointList.push({ value: item.centerCol.toString(), left: this.left })
         })
+        console.log(this.pointList)
       })
     },
     handleSizeChange(val) {
@@ -420,6 +420,8 @@ export default {
   height: 12px;
   width: 66px;
   margin-top: 5px;
+  background: #a5db8f;
+  padding: 5px;
   }
 .block{
   position: relative;

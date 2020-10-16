@@ -184,6 +184,7 @@ export default {
           data: ['报警次数']
         },
         toolbox: {
+          right: 60,
           show: true,
           feature: {
             dataView: { show: true, readOnly: false },

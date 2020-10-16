@@ -16,7 +16,7 @@
         <el-button v-else type="danger" @click="disconnect">断开连接</el-button>
       </div>
       <div id="myChart" style="width: 100%; height: 50%" />
-      <el-divider />
+
       <el-table
         ref="multipleTable"
         :header-cell-style="{background: 'rgb(22, 159, 231)', textAlign: 'center', color: 'white'}"
@@ -61,10 +61,8 @@ export default {
         case 2:
           return '光纤始端'
         case 3:
-          return '光纤始端'
-        case 4:
           return '光纤末端'
-        case 5:
+        case 4:
           return '其它事件'
         default:
           break
@@ -203,6 +201,7 @@ export default {
           left: 10
         },
         toolbox: {
+          right: 60,
           feature: {
             dataZoom: {
               yAxisIndex: 'none'
@@ -260,7 +259,7 @@ export default {
 .title {
   height: 40px;
   position: relative;
-  margin:0px 0px 20px 20px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
