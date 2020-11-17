@@ -439,6 +439,7 @@ export default {
       }
       option.xAxis.data = this.xData
       option.yAxis.data = data
+      // option.yAxis.max = 4000
       option.series[0].data = data
       this.chart.setOption(option)
     },
@@ -454,17 +455,17 @@ export default {
       if (this.yData.length > this.yMax) {
         this.yData.splice(0, this.yData.length - this.yMax)
       }
-      var key = 0
-      var mx = this.Data1[0]
       this.Data1.forEach((item, index) => {
+        var key = index * 5
+        var mx = this.Data1[index * 5]
         for (let i = index * 5; i < index * 5 + 4; i++) {
           if (this.Data1[i] > this.Data1[index * 5]) {
             mx = this.Data1[i]
             key = i
           }
-          if (mx > this.baseStandInfo.alarmThreshold) {
-            this.twoData.push([key, now, mx])
-          }
+        }
+        if (mx > this.baseStandInfo.alarmThreshold) {
+          this.twoData.push([key, now, mx])
         }
         // const x = Math.max(this.Data1[index * 5], this.Data1[index * 5 + 1], this.Data1[index * 5 + 2], this.Data1[index * 5 + 3], this.Data1[index * 5 + 4])
       })
