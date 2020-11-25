@@ -80,6 +80,7 @@ export default {
         passRate: 0
       },
       monitorEdit: {},
+      flag: {},
       yData: [],
       xData: [],
       Data1: [],
@@ -135,6 +136,9 @@ export default {
   //   next()
   // },
   // beforeDestroy() {
+  //   this.chart1.clear()
+  //   this.chart.clear()
+  //   this.destroyedWs()
   // },
   methods: {
     checkPermission,
@@ -357,10 +361,10 @@ export default {
       if (!this.monitorEdit.col) {
         this.$message.error('请输入距离')
         return false
-      // } else {
-        // this.monitorEdit.col = Math.floor(this.singleAudio / 20)
+      } else {
+        this.flag.col = (parseInt(this.monitorEdit.col) + 140).toString()
       }
-      realtimeAudioQuery(this.monitorEdit).then(response => {
+      realtimeAudioQuery(this.flag).then(response => {
         console.log('response', response)
         this.monitorData = response.data
         this.createWs1()
@@ -456,16 +460,20 @@ export default {
         this.yData.splice(0, this.yData.length - this.yMax)
       }
       this.Data1.forEach((item, index) => {
-        var key = index * 5
-        var mx = this.Data1[index * 5]
-        for (let i = index * 5; i < index * 5 + 4; i++) {
-          if (this.Data1[i] > this.Data1[index * 5]) {
-            mx = this.Data1[i]
-            key = i
-          }
-        }
-        if (mx > this.baseStandInfo.alarmThreshold) {
-          this.twoData.push([key, now, mx])
+        // 五个过滤一个最大的值
+        // var key = index * 5
+        // var mx = this.Data1[index * 5]
+        // for (let i = index * 5; i < index * 5 + 4; i++) {
+        //   if (this.Data1[i] > this.Data1[index * 5]) {
+        //     mx = this.Data1[i]
+        //     key = i
+        //   }
+        // }
+        // if (mx > this.baseStandInfo.alarmThreshold) {
+        //   this.twoData.push([key, now, mx])
+        // }
+        if (this.Data1[index] > this.baseStandInfo.alarmThreshold) {
+          this.twoData.push([index, now, this.Data1[index]])
         }
         // const x = Math.max(this.Data1[index * 5], this.Data1[index * 5 + 1], this.Data1[index * 5 + 2], this.Data1[index * 5 + 3], this.Data1[index * 5 + 4])
       })

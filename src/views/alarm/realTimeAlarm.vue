@@ -34,7 +34,11 @@
     >
       <el-table-column label="报警类型" prop="alarmType" />
       <el-table-column label="通道号" prop="lineInfoChannel" />
-      <el-table-column label="距离" prop="distance" />
+      <el-table-column label="距离">
+        <template slot-scope="scope">
+          <span>{{ scope.row.centerCol*20 | scope.row.distance }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="开始点" prop="beginCol" />
       <el-table-column label="中心点" prop="centerCol" />
       <el-table-column label="结束点" prop="endCol" />
