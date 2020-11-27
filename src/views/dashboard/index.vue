@@ -349,8 +349,8 @@ export default {
         this.listLoading = false
         this.pointList = []
         this.list.forEach(item => {
-          this.left = (item.centerCol / 500)
-          this.pointList.push({ value: item.centerCol.toString(), left: this.left })
+          this.left = (item.distance / 500)
+          this.pointList.push({ value: item.distance.toString(), left: this.left })
         })
         console.log(this.pointList)
       })

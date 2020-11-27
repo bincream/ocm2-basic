@@ -52,7 +52,7 @@
       <el-table-column label="通道号" prop="lineInfoChannel" />
       <el-table-column label="距离">
         <template slot-scope="scope">
-          <span>{{ scope.row.centerCol*20 | scope.row.distance }}</span>
+          <span>{{ scope.row.distance }}</span>
         </template>
       </el-table-column>
       <el-table-column label="开始点" prop="beginCol" />
@@ -152,6 +152,7 @@ import { getAllList, getNew, resolve } from '@/api/alarm/alarmHis'
 import waves from '@/directive/waves' // 水波纹指令
 import checkPermission from '@/utils/permission' // 权限判断函数
 import FilenameOption from '@/views/components/FilenameOption'
+import { baseStandInfo } from '@/api/public'
 export default {
   name: 'SysUser',
   components: { FilenameOption },
@@ -193,6 +194,7 @@ export default {
         page: 1,
         limit: 20
       },
+      baseStandInfo: {},
       audioSrc: '',
       dangerLevelList: [{ id: 0, value: 0 }, { id: 1, value: 1 }, { id: 2, value: 2 }, { id: 3, value: 3 }],
       date: '',
@@ -224,6 +226,9 @@ export default {
   methods: {
     checkPermission,
     getList() {
+      baseStandInfo().then(response => {
+        this.baseStandInfo = response.data
+      })
       this.listLoading = true
       getAllList(this.listQuery).then(response => {
         this.$set(this, 'list', [])
@@ -231,6 +236,7 @@ export default {
         this.total = response.data.total
         this.listLoading = false
         response.data.list.forEach((item, index) => {
+          this.$set(this.list[index], 'distance', item.centerCol * this.baseStandInfo.precisions)
           this.$set(this.list[index], 'oggPath', item.oggPath)
           this.$set(this.list[index], 'fileName', item.fileName)
         })
@@ -376,7 +382,7 @@ export default {
           }
         })
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['基站', '开始点', '中心点', '结束点', '识别类型', '开始时间', '告警时间', '振动次数', '是否处理', '处理方式', '']
+          const tHeader = ['基站', '开始点', '中心点', '结束点', '识别类型', '开始时间', '告警时间', '振动次数', '是否处理', '处理方式']
           const filterVal = ['standName', 'startCol', 'centerCol', 'endCol', 'typeId', 'beginTime', 'endTime', 'freq', 'type', 'solution']
           const data = this.formatJson(filterVal, list)
           excel.export_json_to_excel({

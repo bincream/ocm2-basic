@@ -36,7 +36,7 @@
       <el-table-column label="通道号" prop="lineInfoChannel" />
       <el-table-column label="距离">
         <template slot-scope="scope">
-          <span>{{ scope.row.centerCol*20 | scope.row.distance }}</span>
+          <span>{{ scope.row.distance }}</span>
         </template>
       </el-table-column>
       <el-table-column label="开始点" prop="beginCol" />
@@ -226,6 +226,7 @@
 import { getAllList, getInfo, handle } from '@/api/alarm/alarmInfo'
 import waves from '@/directive/waves' // 水波纹指令
 import checkPermission from '@/utils/permission' // 权限判断函数
+import { baseStandInfo } from '@/api/public'
 export default {
   name: 'SysUser',
   directives: {
@@ -279,6 +280,7 @@ export default {
         page: 1,
         limit: 20
       },
+      baseStandInfo: {},
       date: '',
       dialogDetVisible: false,
       alarmInfo: {},
@@ -313,11 +315,17 @@ export default {
   methods: {
     checkPermission,
     getList() {
+      baseStandInfo().then(response => {
+        this.baseStandInfo = response.data
+      })
       this.listLoading = true
       getAllList(this.listQuery).then(response => {
         this.list = response.data.list
         this.total = response.data.total
         this.listLoading = false
+        response.data.list.forEach((item, index) => {
+          this.$set(this.list[index], 'distance', item.centerCol * this.baseStandInfo.precisions)
+        })
       })
     },
     handleSizeChange(val) {
