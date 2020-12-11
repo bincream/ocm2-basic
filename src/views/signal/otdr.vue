@@ -133,6 +133,9 @@ export default {
     disconnect() {
       this.websocket.close()
       this.websocket = null
+      this.yData = []
+      this.xData = []
+      this.initChart()
     },
     getOtdr() {
       otdrQuery().then(response => {
@@ -225,11 +228,32 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: []
+          data: [],
+          name: '距离',
+          axisLine: {
+            lineStyle: {
+              color: '#434343',
+              width: 2
+            }
+            // symbol: ["none", "arrow"],
+          }
         },
         yAxis: {
           name: '强度',
-          type: 'value'
+          type: 'value',
+          show: true,
+          axisLabel: {
+            textStyle: {
+              color: '#434343'
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#434343',
+              width: 2
+            }
+            // symbol: ["none", "arrow"],
+          }
           // max: 1000
         },
         series: [{

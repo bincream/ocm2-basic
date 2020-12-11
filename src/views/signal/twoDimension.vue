@@ -80,7 +80,7 @@ export default {
         passRate: 0
       },
       monitorEdit: {},
-      flag: {},
+      // flag: {},
       yData: [],
       xData: [],
       Data1: [],
@@ -151,6 +151,12 @@ export default {
     },
     disconnect() {
       this.destroyedWs()
+      this.xData = []
+      this.yData = []
+      this.twoData = []
+      const chart1Data = []
+      this.myChart1(chart1Data)
+      this.createWs1()
     },
     sidebarResizeHandler(e) {
       if (e.propertyName === 'width') {
@@ -361,10 +367,10 @@ export default {
       if (!this.monitorEdit.col) {
         this.$message.error('请输入距离')
         return false
-      } else {
-        this.flag.col = (parseInt(this.monitorEdit.col) + 140).toString()
+      // } else {
+      //   this.flag.col = (parseInt(this.monitorEdit.col) + 140).toString()
       }
-      realtimeAudioQuery(this.flag).then(response => {
+      realtimeAudioQuery(this.monitorEdit).then(response => {
         console.log('response', response)
         this.monitorData = response.data
         this.createWs1()
@@ -384,7 +390,7 @@ export default {
           trigger: 'axis'
         },
         toolbox: {
-          right: 60,
+          right: 110,
           feature: {
             // dataZoom: {
             //   yAxisIndex: 'none'
@@ -410,18 +416,38 @@ export default {
           type: 'category',
           data: [],
           min: this.startX,
-          max: this.endX
+          max: this.endX,
+          name: '距离',
+          axisLine: {
+            lineStyle: {
+              color: '#434343',
+              width: 2
+            }
+            // symbol: ["none", "arrow"],
+          }
         },
         yAxis: {
-          axisLabel: {
-            formatter: function() {
-              return ''
-            }
-          },
+          name: '强度',
           splitLine: {// 去除网格线
             show: false
           },
-          type: 'value'
+          type: 'value',
+          show: true,
+          axisLabel: {
+            formatter: function() {
+              return ''
+            },
+            textStyle: {
+              color: '#434343'
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#434343',
+              width: 2
+            }
+            // symbol: ["none", "arrow"],
+          }
         },
         series: [{
           name: '强度',
@@ -500,11 +526,33 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: []
+          data: [],
+          name: '距离',
+          axisLine: {
+            lineStyle: {
+              color: '#434343',
+              width: 2
+            }
+            // symbol: ["none", "arrow"],
+          }
         },
         yAxis: {
+          name: '强度',
           type: 'category',
-          data: []
+          data: [],
+          show: true,
+          axisLabel: {
+            textStyle: {
+              color: '#434343'
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#434343',
+              width: 2
+            }
+            // symbol: ["none", "arrow"],
+          }
         },
         toolbox: {
           right: 60,
@@ -694,16 +742,15 @@ export default {
   margin-bottom: 100px;
 }
 .title {
+  height: 40px;
   position: relative;
-  margin-left: 20px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  line-height:42px;
-  font-size:30px;
-  font-weight:500;
+  font-size:22px;
   color:rgba(0,0,0,1);
-  margin-top: 20px
+  line-height:42px;
 }
 
 .radio-label {

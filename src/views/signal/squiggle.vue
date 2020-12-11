@@ -97,6 +97,9 @@ export default {
     disconnect() {
       this.websocket.close()
       this.websocket = null
+      this.xData = []
+      this.yData = []
+      this.initChart()
     },
     getRsc() {
       rscQuery().then(response => {
@@ -183,13 +186,34 @@ export default {
           type: 'category',
           data: [],
           max: this.xMax,
-          min: this.xMin
+          min: this.xMin,
+          name: '距离',
+          axisLine: {
+            lineStyle: {
+              color: '#434343',
+              width: 2
+            }
+            // symbol: ["none", "arrow"],
+          }
         },
         yAxis: {
           name: '强度',
           type: 'value',
           max: this.yMax,
-          min: this.yMin
+          min: this.yMin,
+          show: true,
+          axisLabel: {
+            textStyle: {
+              color: '#434343'
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#434343',
+              width: 2
+            }
+            // symbol: ["none", "arrow"],
+          }
         },
         series: [{
           name: '频谱',

@@ -27,7 +27,7 @@
       <el-table-column label="基站通道" prop="standChannel" />
       <el-table-column label="基站IP" prop="standIp" />
       <el-table-column label="基站精度" prop="precisions" />
-      <el-table-column label="基站模式">
+      <el-table-column label="基站模式" width="160">
         <template slot-scope="scope">
           {{ scope.row.standMode | standMode }}
         </template>
@@ -36,12 +36,6 @@
       <el-table-column label="报警阈值" prop="alarmThreshold" />
       <el-table-column label="操作" width="260">
         <template slot-scope="scope">
-          <!-- <el-button
-            v-if="checkPermission(['baseStand/getPrecisions'])"
-            type="primary"
-            size="small"
-            @click.stop="handlePre(scope.row)"
-          >获取精度</el-button> -->
           <el-button
             v-if="checkPermission(['baseStand/update'])"
             type="primary"
@@ -93,6 +87,11 @@
               <td class="width33">
                 <el-form-item label="报警阈值" prop="alarmThreshold">
                   <el-input v-model="standEdit.alarmThreshold" size="small" placeholder="请输入" />
+                </el-form-item>
+              </td>
+              <td class="width33">
+                <el-form-item label="报警精度" prop="precisions">
+                  <el-input v-model="standEdit.precisions" size="small" placeholder="请输入" />
                 </el-form-item>
               </td>
             </tr>
