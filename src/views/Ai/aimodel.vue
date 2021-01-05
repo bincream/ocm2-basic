@@ -1118,8 +1118,8 @@ export default {
         // 当有消息过来的时候触发
         const that = this
         this.websocket.onmessage = function(event) {
-          const data = JSON.parse(event.data)
-          that.getWsData(data)
+          // const data = JSON.parse(event.data)
+          // that.getWsData(data)
         }
 
         // 连接关闭的时候触发
@@ -1131,6 +1131,7 @@ export default {
         this.websocket.onopen = function(event) {
           that.websocket.send(data)
           console.log('建立连接')
+          that.getWsData(data)
         }
 
         this.websocket.onclose = function(event) {
@@ -1146,10 +1147,11 @@ export default {
       })
     },
     getWsData(data) {
-      if (data.SysConfig_AIModelPath === true) {
+      console.log('进入判断')
+      if (data.split('"')[13]) {
         this.$message.success('启用新模型，系统重启中')
-        this.reboot()
         this.getList()
+        this.getReboot()
       }
       if (this.websocket) {
         this.websocket.close()

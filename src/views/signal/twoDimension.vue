@@ -97,7 +97,6 @@ export default {
       decodeAudioTimeout: null,
       startX: 0,
       endX: null
-
     }
   },
   created() { },
@@ -135,11 +134,10 @@ export default {
   //   this.chart1.dispose()
   //   next()
   // },
-  // beforeDestroy() {
-  //   this.chart1.clear()
-  //   this.chart.clear()
-  //   this.destroyedWs()
-  // },
+  beforeRouteLeave(to, from, next) {
+    this.disconnect()
+    next()
+  },
   methods: {
     checkPermission,
     connect() {

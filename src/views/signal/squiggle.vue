@@ -74,10 +74,7 @@ export default {
   },
 
   beforeRouteLeave(to, from, next) {
-    if (this.websocket) {
-      this.websocket.close()
-      this.websocket = null
-    }
+    this.disconnect()
     next()
   },
   methods: {
@@ -95,8 +92,10 @@ export default {
       this.getRsc()
     },
     disconnect() {
-      this.websocket.close()
-      this.websocket = null
+      if (this.websocket) {
+        this.websocket.close()
+        this.websocket = null
+      }
       this.xData = []
       this.yData = []
       this.initChart()
