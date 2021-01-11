@@ -29,7 +29,7 @@
     <el-table
       ref="multipleTable"
       v-loading="listLoading"
-      :header-cell-style="{background: 'rgb(22, 159, 231)', textAlign: 'center', color: 'white'}"
+      :header-cell-style="{background: 'rgb(22, 144, 255)', textAlign: 'center', color: 'white'}"
       :data="list"
       stripe
       :row-style="{textAlign: 'center'}"
@@ -318,7 +318,7 @@
       <el-table
         ref="historyTable"
         v-loading="listLoading"
-        :header-cell-style="{background: 'rgb(22, 159, 231)', textAlign: 'center', color: 'white'}"
+        :header-cell-style="{background: 'rgb(22, 144, 255)', textAlign: 'center', color: 'white'}"
         :data="alarmHisList"
         stripe
         highlight-current-row
@@ -515,10 +515,6 @@
             </td>
           </tr>
           <tr>
-            <!-- <td class="blackMark">模型存放路径：</td>
-            <td class="width21">
-              <span>{{ modelInfo.path }}</span>
-            </td> -->
             <td class="blackMark">置信度：</td>
             <td class="width21">
               <span>{{ modelInfo.score }}</span>

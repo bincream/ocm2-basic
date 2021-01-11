@@ -30,7 +30,7 @@
     <el-table
       ref="typeTable"
       v-loading="listLoading"
-      :header-cell-style="{background: 'rgb(22, 159, 231)', textAlign: 'center', color: 'white'}"
+      :header-cell-style="{background: 'rgb(22, 144, 255)', textAlign: 'center', color: 'white'}"
       :data="list"
       stripe
       :row-style="{textAlign: 'center'}"
@@ -322,7 +322,7 @@
           </div>
           <el-table
             ref="audioTable"
-            :header-cell-style="{background: 'rgb(22, 159, 231)', textAlign: 'center', color: 'white'}"
+            :header-cell-style="{background: 'rgb(22, 144, 255)', textAlign: 'center', color: 'white'}"
             :data="audioList"
             stripe
             highlight-current-row
@@ -588,13 +588,11 @@ export default {
     audioDelete(row) {
       const index = this.audioList.indexOf(row)
       this.audioList.splice(index, 1)
-      console.log(this.audioList)
     },
     audioUpdate(formName) {
       this.audioList.forEach((item, index) => {
         this.alarmIdList.push(item.id)
       })
-      console.log(this.alarmIdList)
       this.$refs[formName].validate(valid => {
         if (valid) {
           audioHandle({ typeId: this.typeId, alarmIdList: this.alarmIdList }).then(response => {
