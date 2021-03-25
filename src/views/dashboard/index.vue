@@ -37,7 +37,7 @@
       <el-table-column label="结束点" prop="endCol" />
       <el-table-column label="开始时间" prop="beginTime" />
       <el-table-column label="告警时间" prop="alarmTime" />
-      <el-table-column label="振动次数" prop="freq" />
+      <!-- <el-table-column label="振动次数" prop="freq" /> -->
       <el-table-column label="强度" prop="amplitude" />
       <el-table-column label="等级" prop="level" />
       <el-table-column label="振动类型" prop="vibType" />
@@ -123,10 +123,10 @@
             <td class="width21">
               <span>{{ alarmInfo.level }}</span>
             </td>
-            <td class="blackMark">振动次数:</td>
+            <!-- <td class="blackMark">振动次数:</td>
             <td class="width21">
               <span>{{ alarmInfo.freq }}</span>
-            </td>
+            </td> -->
             <td class="blackMark">损耗:</td>
             <td class="width21">
               <span>{{ alarmInfo.loss }}</span>

@@ -90,7 +90,7 @@
                 </el-form-item>
               </td>
               <td class="width33">
-                <el-form-item label="报警精度" prop="precisions">
+                <el-form-item label="基站精度" prop="precisions">
                   <el-input v-model="standEdit.precisions" size="small" placeholder="请输入" />
                 </el-form-item>
               </td>
