@@ -515,6 +515,10 @@
             </td>
           </tr>
           <tr>
+            <!-- <td class="blackMark">模型存放路径：</td>
+            <td class="width21">
+              <span>{{ modelInfo.path }}</span>
+            </td> -->
             <td class="blackMark">置信度：</td>
             <td class="width21">
               <span>{{ modelInfo.score }}</span>
@@ -1114,6 +1118,7 @@ export default {
         // 当有消息过来的时候触发
         const that = this
         this.websocket.onmessage = function(event) {
+          console.log('onmessage')
           // const data = JSON.parse(event.data)
           // that.getWsData(data)
         }
@@ -1143,7 +1148,7 @@ export default {
       })
     },
     getWsData(data) {
-      console.log('进入判断')
+      console.log('进入getWsData')
       if (data.split('"')[13]) {
         this.$message.success('启用新模型，系统重启中')
         this.getList()
